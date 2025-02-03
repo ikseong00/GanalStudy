@@ -10,6 +10,6 @@ public class Printer {
     }
 
     static void errorMessage(Exception e) {
-        e.getMessage();
+        System.out.println("[ERROR] " +e.getMessage());
     }
 }
