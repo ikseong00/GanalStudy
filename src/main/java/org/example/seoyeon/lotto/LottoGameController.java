@@ -45,7 +45,7 @@ public class LottoGameController {
             try {
                 Printer.println("Please enter the purchase amount (unit: " + COST + "won)");
                 moneyStr = scan.nextLine();
-                money = Integer.parseInt(enterMoney(moneyStr));
+                money = Integer.parseInt(enterNumber(moneyStr));
                 Printer.println("");
                 if (money % COST != 0) {
                     Printer.errorMessage(new IllegalArgumentException("Please enter in units of" + COST + "won"));
@@ -64,7 +64,7 @@ public class LottoGameController {
         }
     }
 
-    private String enterMoney(String str) {
+    private String enterNumber(String str) {
         String moneyStr = str.replaceAll("[ ,]|won|원", "");
         if (moneyStr.indexOf("십") == 0) {
             moneyStr = moneyStr.replace("십", "10");
@@ -101,20 +101,37 @@ public class LottoGameController {
 
     private void winningLotteryTicket() {
         while (true) {
-            Printer.println("Please enter the numbers of winning lottery ticket.");
-            String[] winningInputs = scan.nextLine().split(",");
-            Integer[] winningNums = new Integer[NUMBER + BONUS];
-            for (int i = 0; i < NUMBER; i++) {
-                winningNums[i] = Integer.parseInt(winningInputs[i]);
+            String[] winningInputs;
+            try {
+                Printer.println("Please enter the numbers of winning lottery ticket.");
+                winningInputs = scan.nextLine().split(",");
+                if(winningInputs.length>NUMBER){
+                    throw new IllegalArgumentException("Please enter "+ NUMBER + " numbers.");
+                }
+                Integer[] winningNums = new Integer[NUMBER + BONUS];
+                for (int i = 0; i < NUMBER; i++) {
+                    winningNums[i] = Integer.parseInt(enterNumber(winningInputs[i]));
+                    if(winningNums[i]<1||winningNums[i]>this.RANGE){
+                        throw new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE);
+                    }
+                }
+                Printer.println("Please enter the bonus number.");
+                if (BONUS == 1) {
+                    winningNums[NUMBER] = Integer.parseInt(enterNumber(scan.nextLine()));
+                    if(winningNums[NUMBER]<1||winningNums[NUMBER]>this.RANGE){
+                        throw new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE);
+                    }
+                }
+                for (int i = 0; i < myLotto.size(); i++) {
+                    checkLottery(winningNums, myLotto.get(i));
+                }
+                break;
+            }catch (NumberFormatException e){
+                Printer.errorMessage(new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE));
             }
-            Printer.println("Please enter the bonus number.");
-            if (BONUS == 1) {
-                winningNums[NUMBER] = scan.nextInt();
+            catch(IllegalArgumentException e){
+                Printer.errorMessage(e);
             }
-            for (int i = 0; i < myLotto.size(); i++) {
-                checkLottery(winningNums, myLotto.get(i));
-            }
-            break;
         }
     }
 
