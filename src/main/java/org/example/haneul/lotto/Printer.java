@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Printer {
-    public String rullet(ArrayList<Integer> list){
+    public void print(String text) {
+        System.out.println(text);
+    }
+
+    public void printError(){
+        System.out.println("[ERROR]");
+    }
+    public void printLotto(List<Integer> list){
         List<Integer> list1=list.stream().sorted().toList();
-        String str="{";
-        return str;
+        System.out.println(list1);
     }
 }
