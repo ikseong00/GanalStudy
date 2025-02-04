@@ -19,10 +19,9 @@ public class Lotto {
     public void makeLottery() {
         for (int i = 0; i < numberCount; i++) {
             int n = random.nextInt(range) + 1;
-            if(lottoes.size()==0){
+            if (lottoes.size() == 0) {
                 lottoes.add(n);
-            }
-            else if (lottoes.contains(n)) {
+            } else if (lottoes.contains(n)) {
                 i--;
                 continue;
             }
