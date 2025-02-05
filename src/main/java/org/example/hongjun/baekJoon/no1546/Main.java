@@ -11,26 +11,26 @@ public class Main {
 
         int n = scanner.nextInt();
 
-        if((n > 1000) || (n < 0)) {
+        if ((n > 1000) || (n < 0)) {
             System.out.println("과목 수 잘못됨");
             return;
         }
 
         double[] arr = new double[n];
 
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             arr[i] = scanner.nextInt();
         }
 
         max = arr[0];
 
         for (double score : arr) {
-            if(score > max) {
+            if (score > max) {
                 max = score;
             }
         }
 
-        if(max != 0) {
+        if (max != 0) {
             for (int i = 0; i < n; i++) {
                 arr[i] = arr[i] / max * 100;
             }

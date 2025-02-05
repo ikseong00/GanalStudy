@@ -10,7 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<Integer> list = new ArrayList<>();
 
-        while(true) {
+        while (true) {
             int num = scanner.nextInt();
             if (num == 0) {
                 break;
@@ -20,7 +20,7 @@ public class Main {
 
         Iterator<Integer> iterator = list.iterator();
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             int num = iterator.next();
             check(num);
         }
@@ -30,13 +30,13 @@ public class Main {
         String str = String.valueOf(n);
         int count = 0;
 
-        for(int i = 0; i < (str.length() / 2); i++) {
-            if(str.charAt(i) == str.charAt(str.length()-i-1)) {
+        for (int i = 0; i < (str.length() / 2); i++) {
+            if (str.charAt(i) == str.charAt(str.length() - i - 1)) {
                 count++;
             }
         }
 
-        if(count == (str.length() / 2)) {
+        if (count == (str.length() / 2)) {
             System.out.println("yes");
         } else {
             System.out.println("no");

@@ -105,7 +105,7 @@ public class LottoGameController {
         Printer.printStr("\n당첨 통계\n---");
         Printer.printResult(addComma(prizeMoney), rank);
 
-        Printer.printStr("총 수익률은 " + getProfitRate(prizeMoney, rank, money) +"%입니다.");
+        Printer.printStr("총 수익률은 " + getProfitRate(prizeMoney, rank, money) + "%입니다.");
 
     }
 
@@ -150,11 +150,11 @@ public class LottoGameController {
             String strMoney = String.valueOf(prizeMoney[i]);
             String commaMoney = "";
             int index = 0;
-            for (int j = 0; j < (strMoney.length()-1) / 3 + 1; j++) {
-                if (j == (strMoney.length()-1) / 3) { // 마지막 반복이면
-                    commaMoney = strMoney.substring(0, strMoney.length()-index) + commaMoney;
+            for (int j = 0; j < (strMoney.length() - 1) / 3 + 1; j++) {
+                if (j == (strMoney.length() - 1) / 3) { // 마지막 반복이면
+                    commaMoney = strMoney.substring(0, strMoney.length() - index) + commaMoney;
                 } else {
-                    commaMoney = "," + strMoney.substring(strMoney.length()-index-3, strMoney.length()-index) + commaMoney;
+                    commaMoney = "," + strMoney.substring(strMoney.length() - index - 3, strMoney.length() - index) + commaMoney;
                 }
                 index += 3;
             }

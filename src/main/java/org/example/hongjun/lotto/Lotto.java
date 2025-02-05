@@ -13,7 +13,7 @@ public class Lotto {
     public void makeLotto() {
         // 중복되지 않는 6개 번호 생성
         while (winNumber.size() != 6) {
-            int number = random.nextInt(45)+1;
+            int number = random.nextInt(45) + 1;
             if (!winNumber.contains(number)) {
                 winNumber.add(number);
             }

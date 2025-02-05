@@ -35,14 +35,14 @@ public class Main {
             }
         }
 
-        if(count == 0) {
-            if(arr.length == 1) {
+        if (count == 0) {
+            if (arr.length == 1) {
                 System.out.println(0);
             } else {
                 System.out.println(1);
             }
         } else if (count == 2) {
-            if((arr[0] % 2 == 1) && (arr[arr.length - 1] % 2 == 1)) {
+            if ((arr[0] % 2 == 1) && (arr[arr.length - 1] % 2 == 1)) {
                 System.out.println(0);
             } else {
                 System.out.println(1);
