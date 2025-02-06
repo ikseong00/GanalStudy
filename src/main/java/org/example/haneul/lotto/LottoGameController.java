@@ -11,7 +11,7 @@ public class LottoGameController {
     List<List> numbers = new ArrayList<>(); // 구매한 로또 리스트
     List<Integer> win=new ArrayList<>(); // 당첨번호 리스트
     int amount, bonus; //구매 개수와 보너스 번호
-    int[] result=new int[5];
+    int[] result=new int[6];
 
     public void play() {
         printer.print("구입금액을 입력해 주세요.");
@@ -43,7 +43,10 @@ public class LottoGameController {
 
         printer.print("당첨 통계\n---\n");
 
+        totalResult();
     }
+
+
 
     private void MakeLottery(int amount) {
         while (numbers.size() < amount) {
@@ -71,6 +74,24 @@ public class LottoGameController {
         }
         if (list.contains(bonus))
             b=true;
+
+        if (count==6){
+            result[0]++;
+        } else if (count==5) {
+            if (b)
+                result[1]++;
+            else result[2]++;
+        } else if (count==4) {
+            result[3]++;
+        } else if (count==3) {
+            result[4]++;
+        } else if (count==2) {
+            result[5]++;
+        }
+
+    }
+
+    private void totalResult() {
 
     }
 
