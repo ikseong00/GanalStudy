@@ -22,10 +22,10 @@ public class LottoGameController {
                 printer.printStr("구입금액을 입력해 주세요.");
                 money = scanner.nextInt();
                 scanner.nextLine();
-                if (money % 1000 != 0) {
+                if (money % 1000 != 0) { //예외1
                     throw new IllegalArgumentException("[Error] 구입 금액은 1,000원 단위여야 합니다.");
                 }
-                if (money < 0) {
+                if (money < 0) { //예외2
                     throw new IllegalArgumentException("[Error] 구입 금액을 음수로 입력하지 마세요.");
                 }
                 lottoAmount = money / 1000;
@@ -50,13 +50,13 @@ public class LottoGameController {
             try {
                 printer.printStr("당첨 번호를 입력해 주세요.");
                 String[] winNum = scanner.nextLine().split(",");
-                if (winNum.length != 6) {
+                if (winNum.length != 6) { //예외3
                     throw new IllegalArgumentException("[ERROR] 로또 번호는 6개를 입력해야 합니다.");
                 }
                 winNums.clear();
                 for (String nums : winNum) {
                     int num = Integer.parseInt(nums.trim());
-                    if (num < 1 || num > 45 || winNums.contains(num)) {
+                    if (num < 1 || num > 45 || winNums.contains(num)) { //예외4
                         throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 하며 중복되면 안됩니다.");
                     }
                     winNums.add(num);
@@ -73,7 +73,7 @@ public class LottoGameController {
             try {
                 printer.printStr("보너스 번호를 입력해 주세요.");
                 bonusNum = scanner.nextInt();
-                if (bonusNum < 1 || bonusNum > 45 || winNums.contains(bonusNum)) {
+                if (bonusNum < 1 || bonusNum > 45 || winNums.contains(bonusNum)) { //예외5
                     throw new IllegalArgumentException("[ERROR] 보너스 번호는 1부터 45 사이의 숫자여야 하며 당첨 번호와 중복되면 안됩니다.");
                 }
                 break;  // 정상적으로 입력되었으면 반복 종료
