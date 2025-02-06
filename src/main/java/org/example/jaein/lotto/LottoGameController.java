@@ -93,6 +93,14 @@ public class LottoGameController {
         for (Lotto lotto:lottos) {
             int count=0;
             int bonusCount=0;
+            for (int num:lotto.lotto) {
+                if (winNums.contains(num)) {
+                    count++;
+                }
+            }
+            if (winNums.contains(bonusNum)&&lotto.lotto.contains(bonusNum)) {
+                bonusCount=1;
+            }
             if (count == 6) result.put("6", result.get("6") + 1);
             else if (count == 5 && bonusCount==1) result.put("5+보너스", result.get("5+보너스") + 1);
             else if (count == 5&&bonusCount!=1) result.put("5", result.get("5") + 1);
@@ -101,6 +109,8 @@ public class LottoGameController {
         }
 
         //6. 당첨 통계 결과 출력
-        printer.printLottoResult();
+        double getMoney=result.get("3")*5000+result.get("4")*50000+result.get("5")*1500000+result.get("5+보너스")*30000000+result.get("6")*2000000000;
+        double profit=getMoney/money*100;
+        printer.printLottoResult(result, profit);
     }
 }
