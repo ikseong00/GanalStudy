@@ -15,4 +15,8 @@ public class Printer {
         List<Integer> list1=list.stream().sorted().toList();
         System.out.println(list1);
     }
+    public void printResult(int i,int[] a){
+        String str;
+        str=i+"개 일치 (";
+    }
 }
