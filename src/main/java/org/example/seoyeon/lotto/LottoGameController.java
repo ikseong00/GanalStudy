@@ -43,17 +43,17 @@ public class LottoGameController {
         int money = 0;
         while (true) {
             try {
-                Printer.println("Please enter the purchase amount (unit: " + COST + "won)");
+                Printer.enterPurchaseMoney(COST);
                 moneyStr = scan.nextLine();
                 money = Integer.parseInt(enterNumber(moneyStr));
                 Printer.println("");
                 if (money % COST != 0) {
-                    Printer.errorMessage(new IllegalArgumentException("Please enter in units of" + COST + "won"));
+                    Printer.enterMoneyError(new IllegalArgumentException(),COST);
                     continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                Printer.errorMessage(new IllegalArgumentException("Please enter the purchase amount."));
+                Printer.enterMoneyError(new IllegalArgumentException(),COST);
             }
         }
         Printer.println("You purchased " + money / COST + " lottery tickets.");
