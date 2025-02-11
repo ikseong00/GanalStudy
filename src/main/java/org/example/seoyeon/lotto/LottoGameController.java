@@ -54,7 +54,7 @@ public class LottoGameController {
         }
         Printer.purchasedLottery(money / cost.value);
         for (int i = 0; i < (money / cost.value); i++) {
-            Lotto lotto = new Lotto(number.value, max.value);
+            Lotto lotto = new Lotto();
             myLotto.add(lotto);
         }
         Printer.printLottery(myLotto);
