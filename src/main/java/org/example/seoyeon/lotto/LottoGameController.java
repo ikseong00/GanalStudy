@@ -43,8 +43,7 @@ public class LottoGameController {
         while (true) {
             try {
                 Printer.enterPurchaseMoney(cost.value);
-                moneyStr = scan.nextLine();
-                money = Integer.parseInt(enterNumber(moneyStr));
+                money = Integer.parseInt(InputManager.moneyInput(scan.nextLine()));
                 if (money % cost.value != 0) {
                     Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
                     continue;
