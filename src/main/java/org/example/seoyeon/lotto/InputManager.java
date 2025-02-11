@@ -35,6 +35,10 @@ public class InputManager {
 
         int money = Integer.parseInt(moneyStr);
 
+        if (money % LottoValue.COST.value != 0) {
+            throw new IllegalArgumentException();
+        }
+
         return money;
     }
 }

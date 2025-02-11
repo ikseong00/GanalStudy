@@ -43,13 +43,11 @@ public class LottoGameController {
             try {
                 Printer.enterPurchaseMoney(cost.value);
                 money = InputManager.moneyInput(scan.nextLine());
-                if (money % cost.value != 0) {
-                    Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
-                    continue;
-                }
                 break;
             } catch (NumberFormatException e) {
                 Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
+            } catch (IllegalArgumentException e) {
+                Printer.enterMoneyError(e, cost.value);
             }
         }
         Printer.purchasedLottery(money / cost.value);
