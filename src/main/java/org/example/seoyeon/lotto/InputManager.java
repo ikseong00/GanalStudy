@@ -1,7 +1,7 @@
 package org.example.seoyeon.lotto;
 
 public class InputManager {
-    static String moneyInput(String str){
+    static int moneyInput(String str) {
         String moneyStr = str.replaceAll("[ ,]|won|원", "");
         if (moneyStr.indexOf("십") == 0) {
             moneyStr = moneyStr.replace("십", "10");
@@ -33,6 +33,10 @@ public class InputManager {
         moneyStr = moneyStr.replace("팔", "8");
         moneyStr = moneyStr.replace("구", "9");
 
-        return moneyStr;
+        int money = Integer.parseInt(moneyStr);
+
+        return money;
     }
+
+
 }

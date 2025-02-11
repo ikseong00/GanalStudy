@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LottoGameController {
-    List<Lotto> myLotto = new ArrayList<>();
-    LottoValue cost = LottoValue.COST;
-    LottoValue number = LottoValue.NUMBER;
-    LottoValue bonus = LottoValue.BONUS;
-    LottoValue max = LottoValue.MAX;
-    LottoValue min = LottoValue.MIN;
+    List<Lotto> myLotto = new ArrayList<>(); // 사용자가 구매한 로또들
+    int money = 0; // 구매 금액
+    LottoValue cost = LottoValue.COST; // 로또 가격
+    LottoValue number = LottoValue.NUMBER; // 한 장의 로또 속 숫자의 개수
+    LottoValue bonus = LottoValue.BONUS; // 보너스 넘버의 개수
+    LottoValue max = LottoValue.MAX; // 로또 번호의 최대치
+    LottoValue min = LottoValue.MIN; // 로또 번호의 최소치
 
     Scanner scan = new Scanner(System.in);
     int[] winners = new int[5];
@@ -38,12 +39,10 @@ public class LottoGameController {
     }
 
     private void buyLotto() {
-        String moneyStr;
-        int money = 0;
         while (true) {
             try {
                 Printer.enterPurchaseMoney(cost.value);
-                money = Integer.parseInt(InputManager.moneyInput(scan.nextLine()));
+                money = InputManager.moneyInput(scan.nextLine());
                 if (money % cost.value != 0) {
                     Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
                     continue;
