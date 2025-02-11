@@ -10,6 +10,10 @@ public class Lotto {
         makeLottery();
     }
 
+    public Lotto(List<Integer> lottoes) {
+        this.lottoes = lottoes;
+    }
+
     public void makeLottery() {
         for (int i = 0; i < LottoValue.NUMBER.value; i++) {
             int n = random.nextInt(LottoValue.MAX.value) + 1;
