@@ -5,7 +5,8 @@ public enum LottoValue {
     MAX(45),
     NUMBER(6),
     BONUS(1),
-    MIN(1);
+    MIN(1),
+    WINNERS(5);
 
     int value;
 
