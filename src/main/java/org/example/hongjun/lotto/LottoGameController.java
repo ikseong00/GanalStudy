@@ -81,7 +81,7 @@ public class LottoGameController {
         while (true) {
             try {
                 try {
-                    Printer.printStr("보너스 번호를 입력해 주세요.");
+                    Printer.printBonusNumberStr();
                     bonusNumber = Integer.parseInt(scanner.nextLine());
 
                     if ((bonusNumber < 1) || (bonusNumber > 45)) { // 1~45 사이 아니면
