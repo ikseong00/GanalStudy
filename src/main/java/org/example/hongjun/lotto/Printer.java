@@ -23,10 +23,6 @@ public class Printer {
         System.out.println("보너스 번호를 입력해 주세요.");
     }
 
-    public static void printResultStr() {
-        System.out.println("\n당첨 통계\n---");
-    }
-
     public static void printProfitRate(double profitRate) {
         System.out.println("총 수익률은 " + profitRate + "%입니다.");
     }
@@ -41,6 +37,7 @@ public class Printer {
     }
 
     public static void printResult(String[] prizeMoney, int[] rank) {
+        System.out.println("\n당첨 통계\n---");
         int[] count = {3, 4, 5, 5, 6};
         for (int i = 0; i < prizeMoney.length; i++) {
             String str = (i != prizeMoney.length - 2) ? "개 일치 (" : "개 일치, 보너스 볼 일치 (";

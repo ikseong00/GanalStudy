@@ -101,7 +101,6 @@ public class LottoGameController {
 
         int[] rank = checkWin(lottos, winNumber, bonusNumber);
 
-        Printer.printResultStr();
         Printer.printResult(addComma(prizeMoney), rank);
 
         Printer.printProfitRate(getProfitRate(prizeMoney, rank, money));
