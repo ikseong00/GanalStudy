@@ -15,11 +15,13 @@ public class LottoGameController {
                     Printer.printMoneyStr();
                     money = Integer.parseInt(scanner.nextLine());
                     if ((money % 1000 != 0) || (money <= 0)) { // 음수거나 1000원 단위가 아니면
-                        throw new IllegalArgumentException("잘못된 금액입니다.");
+                        throw new MoneyRangeException("잘못된 금액입니다.");
                     }
                     break;
                 } catch (NumberFormatException e) { // 문자열, 실수, 공백, 엔터 등 입력 시
                     throw new IllegalArgumentException("정수를 입력하세요.");
+                } catch (MoneyRangeException e) {
+                    Printer.printError(e.getMessage());
                 }
             } catch (IllegalArgumentException e) {
                 Printer.printError(e.getMessage());
