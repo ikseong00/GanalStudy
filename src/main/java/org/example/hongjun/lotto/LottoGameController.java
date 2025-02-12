@@ -12,7 +12,7 @@ public class LottoGameController {
         while (true) {
             try {
                 try {
-                    Printer.printStr("구입금액을 입력해 주세요.");
+                    Printer.printMoneyStr();
                     money = Integer.parseInt(scanner.nextLine());
                     if ((money % 1000 != 0) || (money <= 0)) { // 음수거나 1000원 단위가 아니면
                         throw new IllegalArgumentException("잘못된 금액입니다.");

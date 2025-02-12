@@ -7,6 +7,10 @@ public class Printer {
         System.out.println(str);
     }
 
+    public static void printMoneyStr() {
+        System.out.println("구입금액을 입력해 주세요.");
+    }
+
     public static void printLotto(List<Integer> lotto) {
         System.out.print("[");
         for (int i = 0; i < lotto.size() - 1; i++) {
