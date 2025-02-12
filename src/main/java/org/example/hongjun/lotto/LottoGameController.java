@@ -86,12 +86,12 @@ public class LottoGameController {
                         throw new LottoRangeException("보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
                     }
                     if (winNumber.contains(bonusNumber)) { // 당첨 번호와 중복
-                        throw new IllegalArgumentException("보너스 번호가 당첨 번호와 중복됩니다.");
+                        throw new DuplicateNumberException("보너스 번호가 당첨 번호와 중복됩니다.");
                     }
                     break;
                 } catch (NumberFormatException e) { // 문자열, 실수, 공백, 엔터 등 입력 시
                     throw new IllegalArgumentException("정수를 입력하세요.");
-                } catch (LottoRangeException e) {
+                } catch (LottoRangeException | DuplicateNumberException e) {
                     Printer.printError(e.getMessage());
                 }
             } catch (IllegalArgumentException e) {
