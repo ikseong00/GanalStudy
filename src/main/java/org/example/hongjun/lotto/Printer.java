@@ -27,6 +27,10 @@ public class Printer {
         System.out.println("\n당첨 통계\n---");
     }
 
+    public static void printProfitRate(double profitRate) {
+        System.out.println("총 수익률은 " + profitRate + "%입니다.");
+    }
+
     public static void printLotto(List<Integer> lotto) {
         System.out.print("[");
         for (int i = 0; i < lotto.size() - 1; i++) {

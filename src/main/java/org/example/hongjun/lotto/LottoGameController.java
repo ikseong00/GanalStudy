@@ -104,7 +104,7 @@ public class LottoGameController {
         Printer.printResultStr();
         Printer.printResult(addComma(prizeMoney), rank);
 
-        Printer.printStr("총 수익률은 " + getProfitRate(prizeMoney, rank, money) + "%입니다.");
+        Printer.printProfitRate(getProfitRate(prizeMoney, rank, money));
 
     }
 
