@@ -47,7 +47,7 @@ public class LottoGameController {
         while (true) {
             try {
                 try {
-                    Printer.printStr("당첨 번호를 입력해 주세요.");
+                    Printer.printWinNumberStr();
                     String[] splitArr = scanner.nextLine().split(","); // , 기준 나누기
 
                     // 당첨 번호 int로 저장
