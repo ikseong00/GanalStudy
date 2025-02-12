@@ -7,6 +7,9 @@ public class Printer {
         System.out.println(str);
     }
 
+    public static void printLine() {
+        System.out.println();
+    }
     public static void printMoneyStr() {
         System.out.println("구입금액을 입력해 주세요.");
     }

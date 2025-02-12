@@ -39,7 +39,7 @@ public class LottoGameController {
 
         Printer.printLotto(lottos);
 
-        Printer.printStr("");
+        Printer.printLine();
 
         List<Integer> winNumber = new ArrayList<>(); // 당첨 번호
         while (true) {
@@ -73,7 +73,7 @@ public class LottoGameController {
                 winNumber.clear();
             }
         }
-        Printer.printStr("");
+        Printer.printLine();
 
         int bonusNumber = 0; // 보너스 번호
         while (true) {
