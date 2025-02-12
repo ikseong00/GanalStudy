@@ -83,7 +83,7 @@ public class LottoGameController {
                     bonusNumber = Integer.parseInt(scanner.nextLine());
 
                     if ((bonusNumber < 1) || (bonusNumber > 45)) { // 1~45 사이 아니면
-                        throw new IllegalArgumentException("보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
+                        throw new LottoRangeException("보너스 번호는 1부터 45 사이의 숫자여야 합니다.");
                     }
                     if (winNumber.contains(bonusNumber)) { // 당첨 번호와 중복
                         throw new IllegalArgumentException("보너스 번호가 당첨 번호와 중복됩니다.");
@@ -91,6 +91,8 @@ public class LottoGameController {
                     break;
                 } catch (NumberFormatException e) { // 문자열, 실수, 공백, 엔터 등 입력 시
                     throw new IllegalArgumentException("정수를 입력하세요.");
+                } catch (LottoRangeException e) {
+                    Printer.printError(e.getMessage());
                 }
             } catch (IllegalArgumentException e) {
                 Printer.printError(e.getMessage());
