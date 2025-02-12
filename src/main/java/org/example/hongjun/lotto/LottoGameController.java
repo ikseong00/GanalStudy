@@ -101,7 +101,7 @@ public class LottoGameController {
 
         int[] rank = checkWin(lottos, winNumber, bonusNumber);
 
-        Printer.printStr("\n당첨 통계\n---");
+        Printer.printResultStr();
         Printer.printResult(addComma(prizeMoney), rank);
 
         Printer.printStr("총 수익률은 " + getProfitRate(prizeMoney, rank, money) + "%입니다.");
