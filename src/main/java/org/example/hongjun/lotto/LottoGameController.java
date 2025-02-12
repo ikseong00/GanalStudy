@@ -37,10 +37,8 @@ public class LottoGameController {
             lottos.add(lotto);
         }
 
-        // 로또 번호 출력
-        for (Lotto lotto : lottos) {
-            Printer.printLotto(lotto.winNumber);
-        }
+        Printer.printLotto(lottos);
+
         Printer.printStr("");
 
         List<Integer> winNumber = new ArrayList<>(); // 당첨 번호

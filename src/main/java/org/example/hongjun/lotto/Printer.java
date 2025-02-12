@@ -27,13 +27,15 @@ public class Printer {
         System.out.println("총 수익률은 " + profitRate + "%입니다.");
     }
 
-    public static void printLotto(List<Integer> lotto) {
-        System.out.print("[");
-        for (int i = 0; i < lotto.size() - 1; i++) {
-            System.out.print(lotto.get(i) + ", ");
+    public static void printLotto(List<Lotto> lottos) {
+        for(Lotto lotto : lottos) {
+            System.out.print("[");
+            for (int i = 0; i < lotto.winNumber.size() - 1; i++) {
+                System.out.print(lotto.winNumber.get(i) + ", ");
+            }
+            System.out.print(lotto.winNumber.getLast());
+            System.out.println("]");
         }
-        System.out.print(lotto.getLast());
-        System.out.println("]");
     }
 
     public static void printResult(String[] prizeMoney, int[] rank) {
