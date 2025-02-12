@@ -55,18 +55,20 @@ public class LottoGameController {
 
                     for (int number : winNumber) {
                         if ((number < 1) || (number > 45)) { // 1~45 사이 아니면
-                            throw new IllegalArgumentException("로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+                            throw new LottoRangeException("로또 번호는 1부터 45 사이의 숫자여야 합니다.");
                         }
                     }
                     if (winNumber.size() != 6) { // 6개 아니면
-                        throw new IllegalArgumentException("6개의 번호를 입력해야 합니다.");
+                        throw new LottoSizeException("6개의 번호를 입력해야 합니다.");
                     }
                     if (isDuplication(winNumber)) { // 중복 번호 있으면
-                        throw new IllegalArgumentException("중복된 번호가 있습니다.");
+                        throw new DuplicateNumberException("중복된 번호가 있습니다.");
                     }
                     break;
                 } catch (NumberFormatException e) { // 문자열, 실수, 공백, 엔터 등 입력
                     throw new IllegalArgumentException("정수를 입력하세요.");
+                } catch (LottoRangeException | DuplicateNumberException | LottoSizeException e) {
+                    Printer.printError(e.getMessage());
                 }
             } catch (IllegalArgumentException e) {
                 Printer.printError(e.getMessage());
