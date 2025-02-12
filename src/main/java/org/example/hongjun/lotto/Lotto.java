@@ -9,8 +9,7 @@ public class Lotto {
     List<Integer> winNumber = new ArrayList<>(); // 번호
     Random random = new Random();
 
-    // 로또 번호 생성
-    public void makeLotto() {
+    public Lotto() {
         // 중복되지 않는 6개 번호 생성
         while (winNumber.size() != 6) {
             int number = random.nextInt(45) + 1;

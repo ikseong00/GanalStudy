@@ -34,7 +34,6 @@ public class LottoGameController {
         List<Lotto> lottos = new ArrayList<>();
         for (int i = 0; i < lottoCount; i++) {
             Lotto lotto = new Lotto();
-            lotto.makeLotto(); // 로또 번호 생성
             lottos.add(lotto);
         }
 
