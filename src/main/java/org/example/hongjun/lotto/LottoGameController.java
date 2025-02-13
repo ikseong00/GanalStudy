@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LottoGameController {
     static Scanner scanner = new Scanner(System.in);
-    static int[] prizeMoney = {5000, 50000, 1500000, 30000000, 2000000000}; // 당첨금
+    final static int[] prizeMoney = {5000, 50000, 1500000, 30000000, 2000000000}; // 당첨금
 
     public static void play() {
         int money = 0; // 구입 금액
@@ -71,6 +71,7 @@ public class LottoGameController {
                     throw new IllegalArgumentException("정수를 입력하세요.");
                 } catch (LottoRangeException | DuplicateNumberException | LottoSizeException e) {
                     Printer.printError(e.getMessage());
+                    winNumber.clear();
                 }
             } catch (IllegalArgumentException e) {
                 Printer.printError(e.getMessage());
