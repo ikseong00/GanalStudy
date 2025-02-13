@@ -7,9 +7,6 @@ public class Printer {
         System.out.println(str);
     }
 
-    static void print(String str) {
-        System.out.print(str);
-    }
 
     static void enterPurchaseMoney(int cost) {
         System.out.println("Please enter the purchase amount (unit: " + cost + "won)");
