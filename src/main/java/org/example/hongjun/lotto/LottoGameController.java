@@ -29,8 +29,6 @@ public class LottoGameController {
 
         int lottoCount = money / 1000;
 
-        Printer.printLottoCount(lottoCount);
-
         // 로또 lottoCount개 생성
         List<Lotto> lottos = new ArrayList<>();
         for (int i = 0; i < lottoCount; i++) {

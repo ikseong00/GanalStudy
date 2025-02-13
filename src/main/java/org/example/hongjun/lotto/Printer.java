@@ -14,10 +14,6 @@ public class Printer {
         System.out.println("구입금액을 입력해 주세요.");
     }
 
-    public static void printLottoCount(int lottoCount) {
-        System.out.println("\n" + lottoCount + "개를 구매했습니다.");
-    }
-
     public static void printWinNumberStr() {
         System.out.println("당첨 번호를 입력해 주세요.");
     }
@@ -31,6 +27,7 @@ public class Printer {
     }
 
     public static void printLotto(List<Lotto> lottos) {
+        System.out.println("\n" + lottos.size() + "개를 구매했습니다.");
         for(Lotto lotto : lottos) {
             System.out.print("[");
             for (int i = 0; i < lotto.winNumber.size() - 1; i++) {
