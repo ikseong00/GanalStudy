@@ -4,7 +4,6 @@ import java.util.*;
 
 public class LottoGameController {
     static Scanner scanner = new Scanner(System.in);
-    final static int[] prizeMoney = {5000, 50000, 1500000, 30000000, 2000000000}; // 당첨금
 
     public static void play() {
         int money = 0; // 구입 금액
@@ -106,9 +105,9 @@ public class LottoGameController {
 
         int[] rank = checkWin(lottos, winNumber, bonusNumber);
 
-        Printer.printResult(addComma(prizeMoney), rank);
+        Printer.printResult(rank);
 
-        Printer.printProfitRate(getProfitRate(prizeMoney, rank, money));
+        Printer.printProfitRate(getProfitRate(rank, money));
 
     }
 
@@ -145,33 +144,30 @@ public class LottoGameController {
         return rank;
     }
 
-    // 당첨금에 , 추가해서 String 배열로 변환
-    private static String[] addComma(int[] prizeMoney) {
-        String[] result = new String[prizeMoney.length];
-        for (int i = 0; i < prizeMoney.length; i++) {
-            // 3글자마다 , 추가
-            String strMoney = String.valueOf(prizeMoney[i]);
-            String commaMoney = "";
-            int index = 0;
-            for (int j = 0; j < (strMoney.length() - 1) / 3 + 1; j++) {
-                if (j == (strMoney.length() - 1) / 3) { // 마지막 반복이면
-                    commaMoney = strMoney.substring(0, strMoney.length() - index) + commaMoney;
-                } else {
-                    commaMoney = "," + strMoney.substring(strMoney.length() - index - 3, strMoney.length() - index) + commaMoney;
-                }
-                index += 3;
+    // 당첨금에 , 추가해서 String으로 변환
+    public static String addComma(int money) {
+        // 3글자마다 , 추가
+        String strMoney = String.valueOf(money);
+        String commaMoney = "";
+        int index = 0;
+        for (int j = 0; j < (strMoney.length() - 1) / 3 + 1; j++) {
+            if (j == (strMoney.length() - 1) / 3) { // 마지막 반복이면
+                commaMoney = strMoney.substring(0, strMoney.length() - index) + commaMoney;
+            } else {
+                commaMoney = "," + strMoney.substring(strMoney.length() - index - 3, strMoney.length() - index) + commaMoney;
             }
-            result[i] = commaMoney;
+            index += 3;
         }
 
-        return result;
+        return commaMoney;
     }
 
     // 수익률 계산
-    private static double getProfitRate(int[] prizeMoney, int[] rank, int money) {
+    private static double getProfitRate(int[] rank, int money) {
         int total = 0;
+        PrizeMoney[] prizeMoney = PrizeMoney.values();
         for (int i = 0; i < prizeMoney.length; i++) {
-            total += prizeMoney[i] * rank[i];
+            total += prizeMoney[i].getMoney() * rank[i];
         }
         double profitRate = 100.0 * total / money;
         return Math.round(profitRate * 10) / 10.0;

@@ -41,12 +41,14 @@ public class Printer {
         }
     }
 
-    public static void printResult(String[] prizeMoney, int[] rank) {
+    public static void printResult(int[] rank) {
         System.out.println("\n당첨 통계\n---");
-        int[] count = {3, 4, 5, 5, 6};
+
+        PrizeMoney[] prizeMoney = PrizeMoney.values();
+
         for (int i = 0; i < prizeMoney.length; i++) {
             String str = (i != prizeMoney.length - 2) ? "개 일치 (" : "개 일치, 보너스 볼 일치 (";
-            System.out.println(count[i] + str + prizeMoney[i] + "원) - " + rank[i] + "개");
+            System.out.println(prizeMoney[i].getCount() + str + LottoGameController.addComma(prizeMoney[i].getMoney()) + "원) - " + rank[i] + "개");
         }
     }
 
