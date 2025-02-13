@@ -5,182 +5,126 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LottoGameController {
-    List<Lotto> myLotto = new ArrayList<>();
-    final int COST = 1000;
-    final int NUMBER;
-    final int BONUS;
-    final int RANGE;
+    List<Lotto> myLotto = new ArrayList<>(); // 사용자가 구매한 로또들
+    int money = 0; // 구매 금액
+    LottoValue cost = LottoValue.COST; // 로또 가격
+    LottoValue number = LottoValue.NUMBER; // 한 장의 로또 속 숫자의 개수
+    LottoValue bonus = LottoValue.BONUS; // 보너스 넘버의 개수
+    LottoValue max = LottoValue.MAX; // 로또 번호의 최대치
+    LottoValue min = LottoValue.MIN; // 로또 번호의 최소치
+    Lotto winningLottery;
+    List<Integer> bonusNumbers = new ArrayList<>();
+
     Scanner scan = new Scanner(System.in);
-    int[] winners = new int[5];
-    double[] prize = new double[5];
+    int[] winners = new int[LottoValue.WINNERS.value];
+    PRIZE[] prize = PRIZE.values();
     double sum = 0;
 
 
-    public LottoGameController(int NUMBER, int BONUS, int RANGE) {
-        this.NUMBER = NUMBER;
-        this.BONUS = BONUS;
-        this.RANGE = RANGE;
+    public LottoGameController() {
         for (int i = 0; i < winners.length; i++) {
             winners[i] = 0;
         }
-        prize[0] = 2000000000;
-        prize[1] = 30000000;
-        prize[2] = 1500000;
-        prize[3] = 50000;
-        prize[4] = 5000;
-
     }
 
     public void play() {
         buyLotto();
-        winningLotteryTicket();
+        setWinningLottery();
+        setBonusNumbers();
+        checkLottery(myLotto);
         prizeSum();
-        result();
+        Printer.result(this);
     }
 
     private void buyLotto() {
-        String moneyStr;
-        int money = 0;
         while (true) {
             try {
-                Printer.enterPurchaseMoney(COST);
-                moneyStr = scan.nextLine();
-                money = Integer.parseInt(enterNumber(moneyStr));
-                Printer.println("");
-                if (money % COST != 0) {
-                    Printer.enterMoneyError(new IllegalArgumentException(),COST);
-                    continue;
-                }
+                Printer.enterPurchaseMoney(cost.value);
+                money = InputManager.moneyInput(scan.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                Printer.enterMoneyError(new IllegalArgumentException(),COST);
+                Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
+            } catch (IllegalArgumentException e) {
+                Printer.enterMoneyError(e, cost.value);
             }
         }
-        Printer.println("You purchased " + money / COST + " lottery tickets.");
-        for (int i = 0; i < (money / COST); i++) {
-            Lotto lotto = new Lotto(this.NUMBER, this.RANGE);
+        Printer.purchasedLottery(money / cost.value);
+        for (int i = 0; i < (money / cost.value); i++) {
+            Lotto lotto = new Lotto();
             myLotto.add(lotto);
-            Printer.println(lotto.lottoes.toString());
         }
+        Printer.printLottery(myLotto);
     }
 
-    private String enterNumber(String str) {
-        String moneyStr = str.replaceAll("[ ,]|won|원", "");
-        if (moneyStr.indexOf("십") == 0) {
-            moneyStr = moneyStr.replace("십", "10");
-        } else {
-            moneyStr = moneyStr.replace("십", "0");
-        }
-        if (moneyStr.indexOf("백") == 0) {
-            moneyStr = moneyStr.replace("백", "100");
-        } else {
-            moneyStr = moneyStr.replace("백", "00");
-        }
-        if (moneyStr.indexOf("천") == 0) {
-            moneyStr = moneyStr.replace("천", "1000");
-        } else {
-            moneyStr = moneyStr.replace("천", "000");
-        }
-        if (moneyStr.indexOf("만") == 0) {
-            moneyStr = moneyStr.replace("만", "10000");
-        } else {
-            moneyStr = moneyStr.replace("만", "0000");
-        }
-        moneyStr = moneyStr.replace("일", "1");
-        moneyStr = moneyStr.replace("이", "2");
-        moneyStr = moneyStr.replace("삼", "3");
-        moneyStr = moneyStr.replace("사", "4");
-        moneyStr = moneyStr.replace("오", "5");
-        moneyStr = moneyStr.replace("육", "6");
-        moneyStr = moneyStr.replace("칠", "7");
-        moneyStr = moneyStr.replace("팔", "8");
-        moneyStr = moneyStr.replace("구", "9");
 
-        return moneyStr;
-    }
-
-    private void winningLotteryTicket() {
+    private void setWinningLottery() {
         while (true) {
-            String[] winningInputs;
             try {
-                Printer.println("Please enter the numbers of winning lottery ticket.");
-                winningInputs = scan.nextLine().split(",");
-                if(winningInputs.length>NUMBER){
-                    throw new IllegalArgumentException("Please enter "+ NUMBER + " numbers.");
-                }
-                Integer[] winningNums = new Integer[NUMBER + BONUS];
-                for (int i = 0; i < NUMBER; i++) {
-                    winningNums[i] = Integer.parseInt(enterNumber(winningInputs[i]));
-                    if(winningNums[i]<1||winningNums[i]>this.RANGE){
-                        throw new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE);
-                    }
-                }
-                Printer.println("Please enter the bonus number.");
-                if (BONUS == 1) {
-                    winningNums[NUMBER] = Integer.parseInt(enterNumber(scan.nextLine()));
-                    if(winningNums[NUMBER]<1||winningNums[NUMBER]>this.RANGE){
-                        throw new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE);
-                    }
-                }
-                for (int i = 0; i < myLotto.size(); i++) {
-                    checkLottery(winningNums, myLotto.get(i));
-                }
+                Printer.enterWinningLotteryPlz();
+                winningLottery = InputManager.lotteryInput(scan.nextLine());
                 break;
-            }catch (NumberFormatException e){
-                Printer.errorMessage(new IllegalArgumentException("Please enter the number 1 ~ " + this.RANGE));
-            }
-            catch(IllegalArgumentException e){
+            } catch (NumberFormatException e) {
+                Printer.errorMessage(e);
+            } catch (IllegalArgumentException e) {
                 Printer.errorMessage(e);
             }
         }
     }
 
-    private void checkLottery(Integer[] winningNums, Lotto lotto) {
-        int sameNum = 0;
-        boolean bonus = false;
+    private void setBonusNumbers() {
+        while (true) {
+            try {
+                bonusNumbers = InputManager.bonusInput(this.bonusNumbers, winningLottery);
+                break;
+            } catch (NumberFormatException e) {
+                Printer.errorMessage(e);
+            } catch (IllegalArgumentException e) {
+                Printer.errorMessage(e);
+            }
+        }
+    }
 
-        for (int i = 0; i < NUMBER; i++) {
-            if (lotto.lottoes.contains(winningNums[i])) {
+    private void checkLottery(List<Lotto> lottos) {
+        for (Lotto lotto : lottos) {
+            checkLottery(lotto);
+        }
+    }
+
+    private void checkLottery(Lotto lotto) {
+        int sameNum = 0;
+        boolean bonusCheck = false;
+
+        for (int i = 0; i < number.value; i++) {
+            if (lotto.lottoes.contains(winningLottery.lottoes.get(i))) {
                 sameNum++;
             }
         }
-        if (sameNum != NUMBER) {
-            for (int i = 0; i < BONUS; i++) {
-                if (lotto.lottoes.contains(winningNums[NUMBER])) {
-                    bonus = true;
+        if (sameNum != number.value) {
+            for (int i = 0; i < bonus.value; i++) {
+                if (lotto.lottoes.contains(bonusNumbers.get(i))) {
+                    bonusCheck = true;
                     break;
                 }
             }
         }
 
-        if (sameNum == NUMBER) {
+        if (sameNum == number.value) {
             winners[0]++;
-        } else if (sameNum == NUMBER - 1 && bonus) {
+        } else if (sameNum == number.value - 1 && bonusCheck) {
             winners[1]++;
-        } else if (sameNum == NUMBER - 1) {
+        } else if (sameNum == number.value - 1) {
             winners[2]++;
-        } else if (sameNum == NUMBER - 2) {
+        } else if (sameNum == number.value - 2) {
             winners[3]++;
-        } else if (sameNum == NUMBER - 3) {
+        } else if (sameNum == number.value - 3) {
             winners[4]++;
         }
     }
 
     private void prizeSum() {
-        for (int i = 0; i < 5; i++) {
-            sum += winners[i] * prize[i];
+        for (int i = 0; i < prize.length; i++) {
+            sum += winners[i] * InputManager.doubleInput(prize[i].prize);
         }
     }
 
-    private void result() {
-        Printer.println("");
-        Printer.println("Winning Statistics");
-        Printer.println("--");
-        Printer.println(NUMBER - 3 + "matches (5,000 won) - " + winners[4] + "tickets");
-        Printer.println(NUMBER - 2 + "matches (50,000 won) - " + winners[3] + "tickets");
-        Printer.println(NUMBER - 1 + "matches (1,500,000 won) - " + winners[2] + "tickets");
-        Printer.println(NUMBER - 1 + "matches & bounus ball match (30,000,000 won) - " + winners[1] + "tickets");
-        Printer.println(NUMBER - 3 + "matches (2,000,000,000 won) - " + winners[0] + "tickets");
-        Printer.println("The total return rate is " + (sum / (myLotto.size() * COST)) * 100 + "%");
-    }
 }
