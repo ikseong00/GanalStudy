@@ -43,7 +43,7 @@ public class InputManager {
         int money = Integer.parseInt(moneyStr);
 
         if (money % LottoValue.COST.value != 0) {
-            throw new IllegalArgumentException();
+            throw new CostUnitException();
         }
 
         return money;
@@ -60,16 +60,16 @@ public class InputManager {
         str = str.replaceAll(" ", "");
         String[] numbers = str.split(",");
         if (numbers.length > LottoValue.NUMBER.value) {
-            throw new IllegalArgumentException("Please enter " + LottoValue.NUMBER.value + " numbers.");
+            throw new OutOfLotteryCountException();
         }
         List<Integer> lotto = new ArrayList<>();
         for (int i = 0; i < LottoValue.NUMBER.value; i++) {
             int num = Integer.parseInt(numbers[i]);
             if (lotto.contains(num)) {
-                throw new IllegalArgumentException();
+                throw new AlreadyExistException(num);
             }
             if (num < LottoValue.MIN.value || num > LottoValue.MAX.value) {
-                throw new IllegalArgumentException("Please enter the number 1 ~ " + LottoValue.MAX.value);
+                throw new OutOfRangeException();
             }
             lotto.add(num);
         }
@@ -82,10 +82,10 @@ public class InputManager {
         while (bonus.size() < LottoValue.BONUS.value) {
             int num = Integer.parseInt(scan.nextLine());
             if (winningLotto.lottoes.contains(num)) {
-                throw new IllegalArgumentException();
+                throw new AlreadyExistException(num);
             }
             if (num < LottoValue.MIN.value || num > LottoValue.MAX.value) {
-                throw new IllegalArgumentException("Please enter the number 1 ~ " + LottoValue.MAX.value);
+                throw new OutOfRangeException();
             }
             bonus.add(num);
         }
