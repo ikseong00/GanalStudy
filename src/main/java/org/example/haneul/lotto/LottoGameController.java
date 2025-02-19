@@ -1,112 +1,127 @@
 package org.example.haneul.lotto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class LottoGameController {
     Scanner scanner = new Scanner(System.in);
     Printer printer = new Printer();
-    Lotto lotto = new Lotto();
-    List<List> numbers = new ArrayList<>(); // 구매한 로또 리스트
-    List<Integer> win=new ArrayList<>(); // 당첨번호 리스트
+    List<Lotto> numbers = new ArrayList<>(); // 구매한 로또 리스트
+    List<Integer> win = new ArrayList<>(); // 당첨번호 리스트
+    List<Integer> results = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));// 결과 리스트
     int amount, bonus; //구매 개수와 보너스 번호
-    int[][] result=new int[2][5];
+    int[] prize = new int[5];
 
 
     public void play() {
-        result[0][0]=5000;
-        result[1][0]=50000;
-        result[2][0]=1500000;
-        result[3][0]=30000000;
-        result[4][0]= 2000000000;
-        printer.print("구입금액을 입력해 주세요.");
-        int price = scanner.nextInt();
-        amount = price/1000;
+        prize[4] = 5000;
+        prize[3] = 50000;
+        prize[2] = 1500000;
+        prize[1] = 30000000;
+        prize[0] = 2000000000;
 
-        if (price % 1000 != 0){
+        try{
+            printer.printStart();
+            int price = scanner.nextInt();
+            amount = price / 1000;
+
+            if (price % 1000 != 0) {
+                throw new AmountException("로또는 천원 단위로 구입할 수 있습니다.");
+            }
+
+            printer.printAmount(amount);
+            MakeLottery(amount);
+
+            printer.printInput();
+            scanner.nextLine();
+
+            String line = scanner.nextLine();
+            String[] number = line.split(",");
+            for (String s : number) {
+                win.add(Integer.parseInt(s));
+            }
+
+            if (win.size() != 6){
+                throw new LottoNumberException("로또 번호는 6개 입력해야합니다.");
+            }
+
+            printer.printBonus();
+            bonus = scanner.nextInt();
+
+            if (win.contains(bonus)) {
+                throw new BonusException("보너스 번호는 로또 번호와 중복되면 안됩니다.");
+            }
+
+            check();
+
+            totalResult();
+        }catch (AmountException | LottoNumberException | BonusException e){
+            printer.printError(e);
+        }catch (NumberFormatException e){
             printer.printError();
-            return;
-        }
-        printer.print(amount+"개를 구매했습니다.");
-        MakeLottery(amount);
-
-        printer.print("당첨번호를 입력해주세요.");
-        String line=scanner.nextLine();
-        String[] number = line.split(",");
-        for (String s : number) {
-            win.add(Integer.parseInt(s));
         }
 
-        printer.print("보너스 번호를 입력해주세요.");
-        bonus = scanner.nextInt();
-        if (win.contains(bonus)) {
-            printer.printError();
-            return;
-        }
-
-        check();
-
-        printer.print("당첨 통계\n---\n");
-
-        totalResult();
     }
-
 
 
     private void MakeLottery(int amount) {
         while (numbers.size() < amount) {
-            numbers.add(lotto.create());
+            numbers.add(new Lotto());
         }
 
-        for (List list : numbers) {
+        for (Lotto list : numbers) {
             printer.printLotto(list);
         }
     }
 
-    private void check(){
-        for (List number : numbers) {
+    private void check() {
+        for (Lotto number : numbers) {
             checkLotto(number);
         }
     }
 
-    private void checkLotto(List<Integer> list) {
-        int count=0;
-        boolean b=false;
-        for (int i:list){
-            if (win.contains(i)){
+    private void checkLotto(Lotto lotto) {
+        int count = 0;
+        boolean b = false;
+        for (int i : lotto.lottoes) {
+            if (win.contains(i)) {
                 count++;
             }
         }
-        if (list.contains(bonus))
-            b=true;
+        if (lotto.lottoes.contains(bonus))
+            b = true;
 
-        if (count==6){
-            result[0][1]++;
-        } else if (count==5) {
+        if (count == 6) {
+            results.set(0, results.get(0) + 1);
+        } else if (count == 5) {
             if (b)
-                result[1][1]++;
-            else result[2][1]++;
-        } else if (count==4) {
-            result[3][1]++;
-        } else if (count==3) {
-            result[4][1]++;
+                results.set(1, results.get(1) + 1);
+            else results.set(2, results.get(2) + 1);
+        } else if (count == 4) {
+            results.set(3, results.get(3) + 1);
+        } else if (count == 3) {
+            results.set(4, results.get(4) + 1);
         }
 
     }
 
     private void totalResult() {
-        printer.printResult(3,result[4][0],result[4][1]);
-        printer.printResult(4,result[3][0],result[3][1]);
-        printer.printResult(5,result[2][0],result[2][1]);
-        printer.printResult(5,result[1][0],result[1][1]);
-        printer.printResult(6,result[0][0],result[0][1]);
+        printer.printResult();
+        printer.printResult(3, prize[4], results.get(4), false);
+        printer.printResult(4, prize[3], results.get(3), false);
+        printer.printResult(5, prize[2], results.get(2), false);
+        printer.printResult(5, prize[1], results.get(1), true);
+        printer.printResult(6, prize[0], results.get(0), false);
 
-        int sum=0;
-        sum=result[0][0]*result[0][1]+result[1][0]*result[1][1]
-        +result[2][0]*result[2][1]+result[3][0]*result[3][1]+result[4][0]*result[4][1];
-
-        printer.print("총 수익률은 "+sum/amount*100+"%입니다.");
+        int sum = 0;
+        for (int i = 0; i < 5; i++) {
+            sum += prize[i] * results.get(i);
+        }
+        double res = (double) sum / amount * 100;
+        String formRes = String.format("%.2f", res);
+        printer.print("총 수익률은 " + formRes + "%입니다.");
     }
 
 }
