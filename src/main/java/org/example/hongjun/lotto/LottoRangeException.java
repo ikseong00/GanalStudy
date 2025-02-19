@@ -1,6 +1,6 @@
 package org.example.hongjun.lotto;
 
-public class LottoRangeException extends RuntimeException {
+public class LottoRangeException extends IllegalArgumentException {
     public LottoRangeException(String message) {
         super(message);
     }
