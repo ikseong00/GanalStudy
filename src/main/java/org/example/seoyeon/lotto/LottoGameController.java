@@ -43,9 +43,10 @@ public class LottoGameController {
                 money = InputManager.moneyInput(scan.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                Printer.enterMoneyError(new IllegalArgumentException(), cost.value);
-            } catch (IllegalArgumentException e) {
-                Printer.enterMoneyError(e, cost.value);
+                Printer.errorMessage(new CostUnitException());
+            }
+            catch (IllegalArgumentException e) {
+                Printer.errorMessage(e);
             }
         }
         Printer.purchasedLottery(money / cost.value);
@@ -64,7 +65,7 @@ public class LottoGameController {
                 winningLottery = InputManager.lotteryInput(scan.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                Printer.errorMessage(e);
+                Printer.errorMessage(new OutOfRangeException());
             } catch (IllegalArgumentException e) {
                 Printer.errorMessage(e);
             }
@@ -77,7 +78,7 @@ public class LottoGameController {
                 bonusNumbers = InputManager.bonusInput(this.bonusNumbers, winningLottery);
                 break;
             } catch (NumberFormatException e) {
-                Printer.errorMessage(e);
+                Printer.errorMessage(new OutOfRangeException());
             } catch (IllegalArgumentException e) {
                 Printer.errorMessage(e);
             }
